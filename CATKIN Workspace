@@ -1,11 +1,11 @@
 #making a catkin workspace 
 
-mkdir -p catkin_marcog2/src
-cd catkin_marcog2/src
+mkdir -p catkin_botlers/src
+cd catkin_botlers/src
 catkin_init_workspace
 
-cd ~/catkin_marcog2/
+cd ~/catkin_botlers/
 catkin_make
 
-cd catkin_marcog2
+cd catkin_botlers
 source devel/setup.bash
