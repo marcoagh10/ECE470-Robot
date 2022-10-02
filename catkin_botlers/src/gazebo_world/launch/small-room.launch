@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<launch>
+        <!-- overwriting these args -->
+        <arg name="gui" default="true" />
+
+        <!-- include gazebo_ros launcher -->
+        <include file="$(find aws_robomaker_small_house_world)/launch/small_house.launch">
+                <arg name="gui" value="$(arg gui)" />
+        </include>
+</launch>
