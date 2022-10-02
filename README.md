@@ -21,4 +21,5 @@ Installation Steps:
 - cd catkin_botlers
 - catkin_make
 - source devel/setup.bash
+- rosdep install --rosdistro $ROS_DISTRO --ignore-src --from-paths src
 - roslaunch gazebo_world small-room-ur3.launch
