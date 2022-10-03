@@ -18,6 +18,7 @@ The team has decided to be innovative college students and create a personal rob
 Installation Steps:
 - git clone https://github.com/marcoagh10/ECE470-Robot
 - git submodule update --init --recursive
+- sudo apt-get install ros-noetic-jackal-*
 - cd catkin_botlers
 - catkin_make
 - source devel/setup.bash
