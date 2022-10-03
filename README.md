@@ -23,4 +23,7 @@ Installation Steps:
 - catkin_make
 - source devel/setup.bash
 - rosdep install --rosdistro $ROS_DISTRO --ignore-src --from-paths src
-- roslaunch gazebo_world small-room-ur3.launch
+- For empty world:
+  - roslaunch gazebo_world jackal-ur3.launch
+- For full environment
+  - roslaunch gazebo_world jackal-ur3.launch full:=true
