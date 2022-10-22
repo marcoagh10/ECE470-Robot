@@ -59,8 +59,8 @@
         </include> -->
 
 
-  <arg name="x" default="0" />
-  <arg name="y" default="0" />
+  <arg name="x" default="2.27" />
+  <arg name="y" default="-2.46" />
   <arg name="z" default="1" />
   <arg name="yaw" default="0" />
   <arg name="joystick" default="true" />
