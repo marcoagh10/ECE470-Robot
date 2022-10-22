@@ -8,6 +8,11 @@ import numpy as np
 from geometry_msgs.msg import Twist
 from gazebo_msgs.msg import ModelStates
 
+waypoints = [
+    [2.27, -2.46, 0],
+    [8.18, -4.16, 0]
+]
+
 
 class RobotMover:
     def __init__(self) -> None:
@@ -62,22 +67,37 @@ class RobotMover:
 
         target_angle = np.arctan2(y_t - self.robot_data[1], x_t - self.robot_data[0])
 
+    def angle_error(self, target_pose):
+        error_ang = np.arctan2((target_pose[1] - self.robot_data[1]), target_pose[0] - self.robot_data[0]) - self.robot_data[3]
+        
+        if abs(error_ang) > np.pi:
+            error_ang = np.sign(error_ang) * abs(error_ang) % np.pi
+
+        return error_ang
+
+
 
     def move_rotate_angle(self, target_pose, target_angle):
         rate = rospy.Rate(60)
 
-        error_ang = np.arctan2(target_pose[1] - self.robot_data[1], target_pose[0] - self.robot_data[0]) - self.robot_data[3]
+        error_ang = self.angle_error(target_pose)
+
+        while abs(error_ang) > np.radians(2):
+            error_ang = self.angle_error(target_pose)
+
+            ang_control = error_ang * 1
+
+            print(error_ang)
+
+            self.set_speeds(ang=ang_control)  
+
+            self.pub()
+            rate.sleep()
+
         error_dist = np.sqrt((self.robot_data[0] - target_pose[0])**2 +  (self.robot_data[1] - target_pose[1])**2 ) 
 
-        if abs(error_ang) > np.pi:
-            error_ang = np.sign(error_ang) * abs(error_ang) % np.pi
-
         while abs(error_ang) > np.radians(2) or abs(error_dist) > .1:
-            error_ang = np.arctan2(target_pose[1] - self.robot_data[1], target_pose[0] - self.robot_data[0])  - self.robot_data[3] 
-            
-            if abs(error_ang) > np.pi:
-                error_ang = np.sign(error_ang) * abs(error_ang) % np.pi
-
+            error_ang = self.angle_error(target_pose)
 
             error_dist = np.sqrt((self.robot_data[0] - target_pose[0])**2 +  (self.robot_data[1] - target_pose[1])**2 ) 
 
@@ -118,7 +138,8 @@ class RobotMover:
     def run(self):
         rate = rospy.Rate(60)
 
-        self.move_rotate_angle([0, 0], np.radians(0))
+        self.move_rotate_angle(waypoints[1][:2], waypoints[1][2])
+        self.move_rotate_angle(waypoints[0][:2], waypoints[0][2])
 
         while not rospy.is_shutdown():
             rate.sleep()
