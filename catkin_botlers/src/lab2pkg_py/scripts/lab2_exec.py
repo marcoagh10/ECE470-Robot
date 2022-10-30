@@ -136,6 +136,8 @@ def move_arm(pub_cmd, loop_rate, dest, vel, accel):
     driver_msg.v = vel
     driver_msg.a = accel
     driver_msg.io_0 = current_io_0
+
+    print(driver_msg)
     pub_cmd.publish(driver_msg)
 
     loop_rate.sleep()
@@ -269,7 +271,7 @@ def main():
     loop_count = 0
 
     while(not input_done):
-        input_string = raw_input("Enter number of loops <Either 1 2 3 or 0 to quit> ")
+        input_string = input("Enter number of loops <Either 1 2 3 or 0 to quit> ")
         print("You entered " + input_string + "\n")
 
         if(int(input_string) == 1):
