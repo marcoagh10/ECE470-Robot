@@ -94,9 +94,9 @@ def gripper_sub_callback(data):
 # Callback function for the subscriber that subscribe to "gazebo/link_states"
 def link_states_sub_callback(data):
     for i in range(len(data.name)):
-        if data.name[i] == 'robot::vacuum_gripper':
+        if data.name[i] == 'jackal::vacuum_gripper':
             gripper_pose = data.pose[i]
-            gripper_position_pub.publish(gripper_pose.position)
+            gripper_position_pub.publish(gripper_pose)
             return
 
 if __name__ == '__main__':
@@ -112,7 +112,7 @@ if __name__ == '__main__':
     pos_pub = rospy.Publisher('ur3/position', position, queue_size=10)
     cmd_pub = rospy.Publisher('arm_controller/command', JointTrajectory, queue_size=10)
     gripper_input_pub = rospy.Publisher('ur3/gripper_input', gripper_input, queue_size=10)
-    gripper_position_pub = rospy.Publisher('gripper/position', Point, queue_size=10)
+    gripper_position_pub = rospy.Publisher('gripper/position', Pose, queue_size=10)
 
     try:
         while not rospy.is_shutdown():
