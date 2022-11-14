@@ -1,0 +1,24 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "${default}",
+        "limitSymbolsToIncludedHeaders": false
+      },
+      "includePath": [
+        "/home/ur3/MBM/ECE470-Robot/catkin_botlers/devel/include/**",
+        "/opt/ros/noetic/include/**",
+        "/home/ur3/MBM/ECE470-Robot/catkin_botlers/src/ur3/cv_camera/include/**",
+        "/home/ur3/MBM/ECE470-Robot/catkin_botlers/src/ur3/ur3_driver/include/**",
+        "/home/ur3/MBM/ECE470-Robot/catkin_botlers/src/ur3/universal_robot/ur_kinematics/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS",
+      "intelliSenseMode": "gcc-x64",
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "gnu11",
+      "cppStandard": "c++14"
+    }
+  ],
+  "version": 4
+}

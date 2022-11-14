@@ -44,8 +44,8 @@ def ctrl_sub_callback(data):
     pt = JointTrajectoryPoint()
     pt.positions = list(data.destination)
     pt.positions[0] -= math.pi
-    pt.velocities = [0.0] * 6
-    pt.accelerations = [0.0] * 6
+    pt.velocities = [data.v] * 6
+    pt.accelerations = [data.a] * 6
     pt.time_from_start = get_duration(data.destination, data.v)
     jt.points = [pt]
 
