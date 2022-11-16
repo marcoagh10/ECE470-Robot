@@ -1,3 +1,3 @@
 [submodule "catkin_botlers/src/aws_worlds"]
 	path = catkin_botlers/src/aws_worlds
-	url = https://github.com/aws-robotics/aws-robomaker-small-house-world.git
+	url = https://github.com/Marius-Juston/aws-robomaker-small-house-world.git
