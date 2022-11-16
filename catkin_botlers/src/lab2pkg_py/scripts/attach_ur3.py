@@ -1,76 +1,65 @@
 #!/usr/bin/env python3
 
 import rospy
-from gazebo_msgs.msg import LinkStates, LinkState
+from gazebo_msgs.msg import LinkStates, LinkState, ModelState
+from gazebo_msgs.srv import SetModelState, SetModelStateRequest
 from geometry_msgs.msg import Pose
 from ur3_driver.msg import gripper_input
 from std_msgs.msg import Bool
 import argparse
 
 class Grip:
-    def __init__(self, link="coke_can::link") -> None:
-        self.coke_name = link
+    def __init__(self, link="robot") -> None:
+        self.link_name = link
+        self.robot_name = "jackal::base_link"
 
-        self.coke  = Pose()
-        self.gripper = Pose()
-
-        self._attach = False
+        self.robot  = Pose()
 
         self.sub = rospy.Subscriber("/gazebo/link_states", LinkStates, self.update_links, queue_size=10)
-        self.sub_gripper = rospy.Subscriber("/gripper/position", Pose, self.update_gripper, queue_size=10)
-        self.pub = rospy.Publisher("/gazebo/set_link_state", LinkState, queue_size=5)
-        self.gripper_com = rospy.Subscriber("/ur3/grip", Bool, self.attach_input, queue_size=1)
-
-    def update_gripper(self, msg: Pose):
-        self.gripper = msg
-
-    def attach_input(self, msg:Bool):
-        self._attach = bool(msg.data)
+        self.pub = rospy.ServiceProxy("/gazebo/set_model_state", SetModelState)
 
     def update_links(self, msg : LinkStates):
         l = len(msg.name)
         i = 0
 
+
         for i in range(l):
             name = msg.name[i]
+            print(name, self.robot_name)
 
-            if name == self.coke_name:
-                i += 1
-                self.coke = msg.pose[i]
+            if name == self.robot_name:
+                self.robot = msg.pose[i]
+                self.robot : Pose
+                print(self.robot)
 
-            if i == 2:
+                self.robot.position.z += 0.188069
                 break
-
-        # print("COKE", self.coke)
-
-    def attach(self):
-        self._attach = True
 
     def run(self):
         rate = rospy.Rate(1000)
 
         while not rospy.is_shutdown():
-            if self._attach:
-                out = LinkState()
+            out = SetModelStateRequest()
+            outT = ModelState()
 
-                out.link_name = self.coke_name
-                out.pose = self.gripper
+            out.model_state = outT
 
-                self.pub.publish(out)
+            outT.model_name = self.link_name
+            outT.pose = self.robot
+            # print(self.robot)
+            outT.reference_frame = 'world'
+
+            self.pub.call(out)
             
             rate.sleep()
-
-    def detach(self):
-        self._attach = False
 
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description='Please specify the link you want connect to the end effector')
-    parser.add_argument('--link', type=str, default='coke_can::link')
+    parser.add_argument('--link', type=str, default='robot')
     args = parser.parse_args()
 
-    rospy.init_node("attach", anonymous=True)
+    rospy.init_node("attach_ur3", anonymous=True)
 
     a = Grip(args.link)
-    a.attach()
     a.run()

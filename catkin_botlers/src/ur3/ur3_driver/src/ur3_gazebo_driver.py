@@ -94,7 +94,7 @@ def gripper_sub_callback(data):
 # Callback function for the subscriber that subscribe to "gazebo/link_states"
 def link_states_sub_callback(data):
     for i in range(len(data.name)):
-        if data.name[i] == 'jackal::vacuum_gripper':
+        if data.name[i] == 'robot::vacuum_gripper':
             gripper_pose = data.pose[i]
             gripper_position_pub.publish(gripper_pose)
             return

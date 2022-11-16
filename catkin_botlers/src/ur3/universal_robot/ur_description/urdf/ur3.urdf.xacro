@@ -79,11 +79,11 @@
           <color rgba="0.7 0.7 0.7 1.0"/>
         </material>
       </visual>
-      <collision>
+      <!-- <collision>
         <geometry>
           <mesh filename="package://ur_description/meshes/ur3/collision/base.stl"/>
         </geometry>
-      </collision>
+      </collision> -->
       <xacro:cylinder_inertial radius="0.075" length="0.038" mass="${base_mass}">
         <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
       </xacro:cylinder_inertial>
@@ -118,11 +118,11 @@
           <color rgba="0.7 0.7 0.7 1.0"/>
         </material>
       </visual>
-      <collision>
+      <!-- <collision>
         <geometry>
           <mesh filename="package://ur_description/meshes/ur3/collision/shoulder.stl"/>
         </geometry>
-      </collision>
+      </collision> -->
       <xacro:cylinder_inertial radius="0.075" length="0.178" mass="${shoulder_mass}">
         <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
       </xacro:cylinder_inertial>
@@ -157,11 +157,11 @@
           <color rgba="0.7 0.7 0.7 1.0"/>
         </material>
       </visual>
-      <collision>
+      <!-- <collision>
         <geometry>
           <mesh filename="package://ur_description/meshes/ur3/collision/upperarm.stl"/>
         </geometry>
-      </collision>
+      </collision> -->
       <xacro:cylinder_inertial radius="0.075" length="${-a2}" mass="${upper_arm_mass}">
         <origin xyz="0.0 0.0 ${-a2/2.0}" rpy="0 0 0" />
       </xacro:cylinder_inertial>
@@ -196,11 +196,11 @@
           <color rgba="0.7 0.7 0.7 1.0"/>
         </material>
       </visual>
-      <collision>
+      <!-- <collision>
         <geometry>
           <mesh filename="package://ur_description/meshes/ur3/collision/forearm.stl"/>
         </geometry>
-      </collision>
+      </collision> -->
       <xacro:cylinder_inertial radius="0.075" length="${-a3}" mass="${forearm_mass}">
         <origin xyz="0.0 0.0 ${-a3/2.0}" rpy="0 0 0" />
       </xacro:cylinder_inertial>
@@ -235,11 +235,11 @@
           <color rgba="0.7 0.7 0.7 1.0"/>
         </material>
       </visual>
-      <collision>
+      <!-- <collision>
         <geometry>
           <mesh filename="package://ur_description/meshes/ur3/collision/wrist1.stl"/>
         </geometry>
-      </collision>
+      </collision> -->
       <xacro:cylinder_inertial radius="0.075" length="0.12" mass="${wrist_1_mass}">
         <origin xyz="0.0 ${wrist_1_length} 0.0" rpy="0 0 0" />
       </xacro:cylinder_inertial>
@@ -274,11 +274,11 @@
           <color rgba="0.7 0.7 0.7 1.0"/>
         </material>
       </visual>
-      <collision>
+      <!-- <collision>
         <geometry>
           <mesh filename="package://ur_description/meshes/ur3/collision/wrist2.stl"/>
         </geometry>
-      </collision>
+      </collision> -->
       <xacro:cylinder_inertial radius="0.075" length="0.12" mass="${wrist_2_mass}">
         <origin xyz="0.0 0.0 ${wrist_2_length}" rpy="0 0 0" />
       </xacro:cylinder_inertial>
@@ -313,11 +313,11 @@
           <color rgba="0.7 0.7 0.7 1.0"/>
         </material>
       </visual>
-      <collision>
+      <!-- <collision>
         <geometry>
           <mesh filename="package://ur_description/meshes/ur3/collision/wrist3.stl"/>
         </geometry>
-      </collision>
+      </collision> -->
       <xacro:cylinder_inertial radius="0.032" length="0.04" mass="${wrist_3_mass}">
         <origin xyz="0.0 ${wrist_3_length - 0.02} 0.0" rpy="${pi/2} 0 0" />
       </xacro:cylinder_inertial>
@@ -335,7 +335,7 @@
           <mesh filename="package://ur_description/meshes/ur3/visual/UR3SuctionCupMount.stl" scale="0.001 0.001 0.001"/>
         </geometry>
       </visual>
-      <collision>
+      <!-- <collision>
         <geometry>
           <box size="0.01 0.01 0.01"/>
         </geometry>
@@ -348,7 +348,7 @@
           </friction>
         </surface>
         <origin rpy="0 0 0" xyz="-0.01 0 0"/>
-      </collision>
+      </collision> -->
       <inertial>
         <origin rpy="0 0 0" xyz="0.000000 0.000000 0.000000"/>
         <mass value="0.0001"/>

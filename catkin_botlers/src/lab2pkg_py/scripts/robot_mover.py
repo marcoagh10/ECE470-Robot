@@ -7,10 +7,11 @@ from nav_msgs.msg import Odometry
 import numpy as np
 from geometry_msgs.msg import Twist
 from gazebo_msgs.msg import ModelStates
+from std_msgs.msg import Bool, Int8
 
 waypoints = [
     [2.27, -2.46, 0],
-    [8.18, -4.16, 0]
+    [8.28, -3.923, 0]
 ]
 
 
@@ -18,16 +19,30 @@ class RobotMover:
     def __init__(self) -> None:
         self.position_sub = rospy.Subscriber("/gazebo/model_states", ModelStates, self.position_callback)
         self.vel_pub = rospy.Publisher("/jackal/jackal_velocity_controller/cmd_vel", Twist, queue_size=1)
+        self.dep_sub = rospy.Subscriber("/depositied", Bool, self.depositied_callaback,queue_size=1)
+
+        self.can_nums_sub = rospy.Subscriber("/can_nums", Int8, self.num_cans_callback,queue_size=1)
 
         self.cmd_vel = Twist()
 
         self.robot_data = [0,0,0,0]
 
         self.received_first = False
+        self.depositied = False
+
+        self.has_seen = False
+        self.num_cans = 0
 
         self.wait_for_pose()
 
         print("recieved first")
+
+    def num_cans_callback(self, msg: Int8):
+        self.num_cans = msg.data
+        self.has_seen = True
+
+    def depositied_callaback(self, msg: Bool):
+        self.depositied = msg.data
 
     def wait_for_pose(self):
         rate = rospy.Rate(60)
@@ -138,11 +153,27 @@ class RobotMover:
     def run(self):
         rate = rospy.Rate(60)
 
-        self.move_rotate_angle(waypoints[1][:2], waypoints[1][2])
-        self.move_rotate_angle(waypoints[0][:2], waypoints[0][2])
-
-        while not rospy.is_shutdown():
+        while not self.has_seen and not rospy.is_shutdown():
             rate.sleep()
+
+        if rospy.is_shutdown():
+            return
+
+        print("Running",self.num_cans, "times!")
+
+        for i in range(self.num_cans):
+            self.move_rotate_angle(waypoints[1][:2], waypoints[1][2])
+
+            while not self.depositied:
+                if rospy.is_shutdown():
+                    return
+                
+                rate.sleep()
+
+            self.move_rotate_angle(waypoints[0][:2], waypoints[0][2])
+
+        # while not rospy.is_shutdown():
+        #     rate.sleep()
 
 
 if __name__ == "__main__":

@@ -24,7 +24,7 @@
           
   <arg name="x" default="2.27" />
   <arg name="y" default="-2.46" />
-  <arg name="z" default="1" />
+  <arg name="z" default="0.07" />
   <arg name="yaw" default="0" />
   <arg name="joystick" default="false" />
 
@@ -32,7 +32,7 @@
 
     <!-- Configuration of Jackal which you would like to simulate.
         See jackal_description for details. -->
-    <arg name="config" default="front_laser" />
+    <arg name="config" default="base" />
     <!-- <arg name="config" default="base" /> -->
   <arg name="env_runner" value="$(eval 'env_run' if not optenv('OS', 'unknown').lower().startswith('windows') else 'env_run.bat')" />
   <param name="robot_description"
@@ -64,11 +64,11 @@
 
 <!-- send robot urdf to param server -->
 <include file="$(find ur_description)/launch/ur3_upload.launch">
-<arg name="limited" value="$(arg limited)"/>
+  <arg name="limited" value="$(arg limited)"/>
 </include>
 
 <!-- push robot_description to factory and spawn robot in gazebo -->
-<node name="spawn_gazebo_model" pkg="gazebo_ros" type="spawn_model" args="-urdf -param robot_description -model robot -x -0.15 -y 0.15 -z 2.01" respawn="false" output="screen" />
+<node name="spawn_gazebo_model" pkg="gazebo_ros" type="spawn_model" args="-urdf -param robot_description -model robot -x 8.708 -y -3.923 -z 0.4869100 -Y 3.14159265359" respawn="false" output="screen" />
 
 <include file="$(find ur_gazebo)/launch/controller_utils.launch"/>
 
@@ -81,12 +81,32 @@
 
 <!-- <node name="spawn_block" pkg="gazebo_ros" type="spawn_model" args="-file $(find ur_description)/urdf/block.urdf -urdf -model block" /> -->
 
-<node name="spawn_camera" pkg="gazebo_ros" type="spawn_model" args="-file $(find ur_description)/urdf/camera.urdf -urdf -model camera -x 0.29 -y 0.105 -z 0.92" />
+  <!-- <node name="spawn_base_plate" pkg="gazebo_ros" type="spawn_model" args="-file $(find ur_description)/urdf/base_plate.urdf -urdf -model plate -x 8.78 -y -4.48 -z 0.9144 -Y 0" respawn="false" output="screen" /> -->
+<node name="spawn_camera" pkg="gazebo_ros" type="spawn_model" args="-file $(find ur_description)/urdf/camera.urdf -urdf -model camera -x 8.428 -y -4.29 -z 1.48691 -Y 0" />
 
 <node name="ur3_gazebo_driver_1" pkg="ur3_driver" type="ur3_gazebo_driver.py" output="screen">
 </node>
 
 <include file="$(find gazebo_world)/launch/spawn_coke.launch"> 
+  <arg name="name" value="coke_can0" />
+  <arg name="y" value="-4.167347" />
 </include>
+<include file="$(find gazebo_world)/launch/spawn_coke.launch"> 
+  <arg name="name" value="coke_can1" />
+  <arg name="y" value="-4.267347"/>
+</include>
+<include file="$(find gazebo_world)/launch/spawn_coke.launch"> 
+  <arg name="name" value="coke_can2" />
+  <arg name="y" value="-4.367347"/>
+</include>
+
+<node name="gripper" pkg="lab2pkg_py" type="attach_block.py" output="screen">
+</node>
+
+<!-- <node name="robot_movement" pkg="lab2pkg_py" type="robot_mover.py" output="screen">
+</node>
+
+<node name="camera_viz" pkg="lab2pkg_py" type="lab5_exec.py" output="screen">
+</node> -->
 
 </launch>
