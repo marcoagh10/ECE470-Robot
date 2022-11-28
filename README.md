@@ -24,11 +24,15 @@ The team has decided to be innovative college students and create a personal rob
 - catkin_make
 - source devel/setup.bash
 - rosdep install --rosdistro $ROS_DISTRO --ignore-src --from-paths src
-- For empty world:
-  - roslaunch gazebo_world jackal-ur3.launch
+- For empty world ( for debugging):
+  - roslaunch gazebo_world jackal-ur3-combo.launch
 - For full environment
-  - roslaunch gazebo_world jackal-ur3.launch full:=true
+  - roslaunch gazebo_world jackal-ur3-combo.launch full:=1
 
 ## Project Update 1
 
 YouTube video: https://youtu.be/hEcyMMYbb58
+
+## Project Update 2
+
+YouTube video: https://www.youtube.com/watch?v=z9S0VqKqwzk
